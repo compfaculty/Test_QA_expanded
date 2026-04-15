@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+    <h2>Configuration</h2>
+    <p>Edit sampling defaults, ammeter endpoints, and SQLite path.</p>
+    <div id="config-message" class="message"></div>
+
+    <form id="config-form">
+        <fieldset>
+            <legend>Sampling</legend>
+            <label>Measurements Count
+                <input type="number" min="1" name="measurements_count" value="{{ config.testing.sampling.measurements_count }}" required>
+            </label>
+            <label>Total Duration (seconds)
+                <input type="number" min="0.001" step="0.001" name="total_duration_seconds" value="{{ config.testing.sampling.total_duration_seconds }}" required>
+            </label>
+            <label>Sampling Frequency (Hz)
+                <input type="number" min="0.001" step="0.001" name="sampling_frequency_hz" value="{{ config.testing.sampling.sampling_frequency_hz }}" required>
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Ammeters</legend>
+            {% for name, meter in config.ammeters.items() %}
+            <div class="meter-card">
+                <h3>{{ name }}</h3>
+                <label>Port
+                    <input type="number" min="1" name="{{ name }}_port" value="{{ meter.port }}" required>
+                </label>
+                <label>Command
+                    <input type="text" name="{{ name }}_command" value="{{ meter.command }}" required>
+                </label>
+            </div>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Result Management</legend>
+            <label>SQLite Database Path
+                <input type="text" name="database_path" value="{{ config.result_management.database_path }}" required>
+            </label>
+        </fieldset>
+
+        <button type="submit">Save Config</button>
+    </form>
+</section>
+{% endblock %}
+

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+    <h2>Visualization & Compare</h2>
+    <form method="get" action="/visualize" class="inline-form">
+        <label>Primary Run
+            <select name="run_id">
+                <option value="">select run</option>
+                {% for run in run_selector_options %}
+                <option value="{{ run.test_run_id }}" {% if selected_run_id == run.test_run_id %}selected{% endif %}>{{ run.label }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Compare Run
+            <select name="compare_run_id">
+                <option value="">none</option>
+                {% for run in run_selector_options %}
+                <option value="{{ run.test_run_id }}" {% if compare_run_id == run.test_run_id %}selected{% endif %}>{{ run.label }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <button type="submit">Load</button>
+    </form>
+
+    {% if load_error %}
+    <p class="message error">{{ load_error }}</p>
+    {% endif %}
+
+    {% if selected_run %}
+    <article class="result-card">
+        <h3>Primary Run Details</h3>
+        <p><strong>Run ID:</strong> <span class="mono">{{ selected_run.test_run_id }}</span></p>
+        <p><strong>Ammeter:</strong> {{ selected_run.metadata.ammeter_type }}</p>
+        <p><strong>Mean:</strong> {{ selected_run.statistics.mean }} A</p>
+        <p><strong>Stdev:</strong> {{ selected_run.statistics.stdev }} A</p>
+    </article>
+    <canvas id="run-chart" height="110"></canvas>
+    {% else %}
+    <p>Select a run to visualize sample data.</p>
+    {% endif %}
+
+    {% if selected_run and compare_run %}
+    <article class="result-card">
+        <h3>Comparison Metrics (Second - First)</h3>
+        <p><strong>First:</strong> <span class="mono">{{ comparison_result.first_run_id }}</span></p>
+        <p><strong>Second:</strong> <span class="mono">{{ comparison_result.second_run_id }}</span></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>mean</th>
+                    <th>median</th>
+                    <th>stdev</th>
+                    <th>min</th>
+                    <th>max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ comparison_result.metric_deltas.mean }}</td>
+                    <td>{{ comparison_result.metric_deltas.median }}</td>
+                    <td>{{ comparison_result.metric_deltas.stdev }}</td>
+                    <td>{{ comparison_result.metric_deltas.min }}</td>
+                    <td>{{ comparison_result.metric_deltas.max }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+    <canvas id="compare-chart" height="110"></canvas>
+    {% endif %}
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    window.visualizationData = {
+        selectedRun: {{ selected_run | tojson }},
+        compareRun: {{ compare_run | tojson }}
+    };
+</script>
+{% endblock %}
+

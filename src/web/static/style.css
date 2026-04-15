@@ -1,0 +1,145 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #10131a;
+    color: #e8ecf1;
+}
+
+.topbar {
+    padding: 1rem 1.5rem;
+    background: #171d28;
+    border-bottom: 1px solid #2a3342;
+}
+
+.topbar h1 {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab {
+    color: #c6d2e2;
+    text-decoration: none;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid #2f3b4d;
+    border-radius: 6px;
+}
+
+.tab.active {
+    background: #2f81f7;
+    border-color: #2f81f7;
+    color: #fff;
+}
+
+.content {
+    padding: 1rem 1.5rem;
+}
+
+.panel {
+    background: #151b25;
+    border: 1px solid #283345;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+fieldset {
+    border: 1px solid #324057;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+}
+
+legend {
+    padding: 0 0.4rem;
+    color: #98acc7;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+input,
+select,
+button {
+    margin-top: 0.3rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.45rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid #3a4a62;
+    background: #101620;
+    color: #e8ecf1;
+}
+
+button {
+    width: auto;
+    cursor: pointer;
+    background: #2f81f7;
+    border-color: #2f81f7;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+}
+
+th,
+td {
+    border: 1px solid #2f3b4d;
+    padding: 0.45rem;
+    text-align: left;
+}
+
+.inline-form {
+    display: flex;
+    gap: 0.75rem;
+    align-items: end;
+    margin-bottom: 1rem;
+}
+
+.inline-form label {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.meter-card {
+    border: 1px solid #2f3b4d;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem;
+}
+
+.result-card {
+    margin-top: 1rem;
+    border: 1px solid #2f3b4d;
+    border-radius: 8px;
+    padding: 0.7rem;
+}
+
+.message {
+    min-height: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.message.ok {
+    color: #3bd671;
+}
+
+.message.error {
+    color: #ff7373;
+}
+
+.hidden {
+    display: none;
+}
+
+.mono {
+    font-family: Consolas, "Courier New", monospace;
+}
+

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+    <h2>Historical Runs</h2>
+    <form method="get" action="/runs" class="inline-form">
+        <label>Filter by Ammeter
+            <select name="ammeter">
+                <option value="">all</option>
+                {% for option in ammeter_options %}
+                <option value="{{ option }}" {% if selected_ammeter == option %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <button type="submit">Apply</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Ammeter</th>
+                <th>Run ID</th>
+                <th>Mean</th>
+                <th>Stdev</th>
+                <th>CV</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if runs %}
+                {% for run in runs %}
+                <tr>
+                    <td>{{ run.timestamp_utc }}</td>
+                    <td>{{ run.ammeter_type }}</td>
+                    <td class="mono">{{ run.test_run_id }}</td>
+                    <td>{{ run.statistics.mean }}</td>
+                    <td>{{ run.statistics.stdev }}</td>
+                    <td>{{ run.coefficient_of_variation }}</td>
+                    <td><a href="/visualize?run_id={{ run.test_run_id }}">visualize</a></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="7">No runs found.</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+

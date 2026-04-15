@@ -1,0 +1,27 @@
+testing:
+  sampling:
+    measurements_count: 100
+    total_duration_seconds: 60
+    sampling_frequency_hz: 2
+ammeters:
+  greenlee:
+    port: 5000
+    command: MEASURE_GREENLEE -get_measurement
+  entes:
+    port: 5001
+    command: MEASURE_ENTES -get_data
+  circutor:
+    port: 5002
+    command: MEASURE_CIRCUTOR -get_measurement -current
+analysis:
+  statistical_metrics:
+  - mean
+  - median
+  - stdev
+  - min
+  - max
+  visualization:
+    enabled: false
+    plot_types: []
+result_management:
+  database_path: results/ammeter_results.db

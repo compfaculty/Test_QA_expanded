@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+    <h2>Start Test</h2>
+    <p>Run a test for one ammeter and persist results</p>
+    <p>If you set only one sampling field, the other parameters are derived automatically.</p>
+    <div id="test-message" class="message"></div>
+
+    <form id="start-test-form">
+        <label>Ammeter Type
+            <select name="ammeter_type" required>
+                {% for ammeter in ammeter_names %}
+                <option value="{{ ammeter }}">{{ ammeter }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>Measurements Count (optional)
+            <input type="number" min="1" name="measurements_count" placeholder="Use config default">
+        </label>
+        <label>Total Duration Seconds (optional)
+            <input type="number" min="0.001" step="0.001" name="total_duration_seconds" placeholder="Use config/default derivation">
+        </label>
+        <label>Sampling Frequency Hz (optional)
+            <input type="number" min="0.001" step="0.001" name="sampling_frequency_hz" placeholder="Use config/default derivation">
+        </label>
+
+        <button type="submit">Run Test</button>
+    </form>
+
+    <article id="test-result" class="result-card hidden">
+        <h3>Latest Run Result</h3>
+        <p><strong>Run ID:</strong> <span data-field="test_run_id"></span></p>
+        <p><strong>Ammeter:</strong> <span data-field="ammeter_type"></span></p>
+        <p><strong>Timestamp:</strong> <span data-field="timestamp_utc"></span></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mean</th>
+                    <th>Median</th>
+                    <th>Stdev</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-field="mean"></td>
+                    <td data-field="median"></td>
+                    <td data-field="stdev"></td>
+                    <td data-field="min"></td>
+                    <td data-field="max"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a id="view-visual-link" href="/visualize">Open in visualization page</a></p>
+    </article>
+</section>
+{% endblock %}
+
